@@ -1,19 +1,26 @@
 
 # Hive Usage
 
+## Table of Contents
+1. [Access Hive CLI](#1-access-hive-command-line-interface)
+2. [Use Hive CLI](#2-use-hive-cli)  
+   2.1 [Create schema](#21-create-schema)  
+   2.2 [Insert and Query data](#22-insert-and-query-data) 
+---
 
-### 1. Change user
+## 1. Access Hive CLI
+Change user
 ```bash
 sudo -i
 su - hadoop
 ```
 
-### 2. Use HIVE command line interface
-โดยพิมพ์ command ดังนี้
+พิมพ์ command ดังนี้ เพื่อเข้า prompt
 ```bash
 hive
 ```
 
+## 2. Use Hive CLI
 ## 2.1 Create Schema
 ### Show databases
 ```bash
