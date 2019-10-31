@@ -1,5 +1,5 @@
 
-# Example of Insert data and Query in Hadoop
+# Hive Usage
 
 
 ### 1. Change user
@@ -9,20 +9,18 @@ su - hadoop
 ```
 
 ### 2. Use HIVE command line interface
+โดยพิมพ์ command ดังนี้
 ```bash
-cd /home/hadoop
 hive
-
-# ***IMPORTANT***
-# เรียก hive ที่ /home/hadoop เท่านั้น
 ```
 
-### 3. Show databases
+## 2.1 Create Schema
+### Show databases
 ```bash
 hive> show databases;
 
 
-# The Result should be
+# [Example] The result should be
 
 # OK
 # default
@@ -30,33 +28,72 @@ hive> show databases;
 # Time taken: 2.214 seconds, Fetched: 2 row(s)
 ```
 
-### 4. Select Databases
+### Create Databases
+```bash
+hive> CREATE DATABASE mydb;
+```
+
+### Select Databases
 ```bash
 hive> use mydb;
 ```
 
-### 5. Show tables
+### Create Table
+```bash
+hive>
+CREATE external TABLE employee (
+    name string,
+    age int,
+    id int
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '|';
+```
+
+### Show tables
 ```bash
 hive> show tables;
 ```
 
-### 6. Insert data
-### 6.1 Insert data directly
+### Check hdfs
+- Path ของ data table ควรถูกเก็บไว้ที่ hdfs ที่ /user/hive/warehouse  
+- โดย database จะถูกเก็บโดย /user/hive/warehouse/<db_name>.db  
+- table จะถูกเก็บโดย /user/hive/warehouse/<db_name>/<table_name>  
+
+สามารถตรวจสอบได้โดยคำสั่งด้านล่าง
 ```bash
-hive> insert into student values(1, 'myName');
+hadoop fs -ls /user/hive/warehouse
+
+# The result should be
+# drwxr-xr-x - hadoop supergroup 0 2019-10-30 15:11 /user/hive/warehouse/mydb.db
+
+hadoop fs -ls /user/hive/warehouse/mydb.db
+
+# The result should be
+# drwxr-xr-x - hadoop supergroup 0 2019-10-30 19:59 /user/hive/warehouse/mydb.db/employee
 ```
 
-### 6.2 load data
+## 2.2 Insert and Query data
+### How to put data
+a.) Use INSERT statement  
+b.) Use LOAD statement
+
+### Select database
+```bash
+hive> use mydb;
+```
+
+### Insert data directly
+```bash
+hive> insert into employee values('Test', 32 ,2);
+```
+
+### load data
 ```bash
 hive> LOAD DATA LOCAL INPATH '/home/hadoop/hive/examples/files/emp.txt' INTO TABLE employee;
 ```
 
-### 7. Query
+### Query
 ```bash
-hive> SELECT * from student;
 hive> SELECT * from employee;
 ```
-
-
-
-
